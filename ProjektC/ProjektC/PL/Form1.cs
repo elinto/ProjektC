@@ -72,7 +72,7 @@ namespace ProjektC
             {
                 var deliteItem = lbKategorier.SelectedItem.ToString();
 
-
+                //test
 
                 KategoriLista.Remove(deliteItem);
 
