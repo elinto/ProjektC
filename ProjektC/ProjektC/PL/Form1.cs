@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -12,6 +13,10 @@ namespace ProjektC
 {
     public partial class Podcasts : Form
     {
+        private HttpClient Client = new HttpClient(); 
+        //private WebPageList listofwebpages = new WebPageList(); 
+
+
         List<string> KategoriLista = new List<string>();
 
         public Podcasts()
