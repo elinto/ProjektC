@@ -50,11 +50,15 @@ namespace ProjektC
 
         private void UpdateKategoriListan() {
             lbKategorier.Items.Clear();
+            cbKategori.Items.Clear();
 
             foreach (var kategori in KategoriLista) {
                 lbKategorier.Items.Add(kategori);
+                cbKategori.Items.Add(kategori);
             }
+
             txtKategori.Clear();
+            
         }
 
         private void lbKategorier_SelectedIndexChanged(object sender, EventArgs e)
@@ -85,6 +89,18 @@ namespace ProjektC
             {
                 Console.WriteLine(ex);
             }
+
+        }
+
+        private void cbKategori_SelectedIndexChanged(object sender, EventArgs e)
+        {
+           
+
+            foreach (var n in KategoriLista)
+            {
+                cbKategori.Text = n.ToString(); 
+            }
+            UpdateKategoriListan();
 
         }
     }
