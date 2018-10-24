@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjektC.BLL;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -23,7 +24,7 @@ namespace ProjektC
         {
             InitializeComponent();
         }
-        //eheheh
+
         private void label1_Click(object sender, EventArgs e)
         {
 
