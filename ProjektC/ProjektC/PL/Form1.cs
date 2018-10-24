@@ -8,12 +8,12 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+ 
 namespace ProjektC
 {
     public partial class Podcasts : Form
     {
-        private HttpClient Client = new HttpClient(); 
+        private HttpClient Client = new HttpClient();
         //private WebPageList listofwebpages = new WebPageList(); 
 
 
@@ -34,7 +34,7 @@ namespace ProjektC
             var oldValue = lbKategorier.SelectedItem.ToString();
             var newvalue = txtKategori.Text;
             int index = KategoriLista.IndexOf(oldValue);
-            if (index!= -1)
+            if (index != -1)
             {
                 KategoriLista[index] = newvalue;
             }
@@ -47,23 +47,26 @@ namespace ProjektC
         private void btnNyKategori_Click(object sender, EventArgs e)
         {
             var kategori = txtKategori.Text;
-            if (!KategoriLista.Contains(kategori)) {
+            if (!KategoriLista.Contains(kategori))
+            {
                 KategoriLista.Add(kategori);
             }
             UpdateKategoriListan();
         }
 
-        private void UpdateKategoriListan() {
+        private void UpdateKategoriListan()
+        {
             lbKategorier.Items.Clear();
             cbKategori.Items.Clear();
 
-            foreach (var kategori in KategoriLista) {
+            foreach (var kategori in KategoriLista)
+            {
                 lbKategorier.Items.Add(kategori);
                 cbKategori.Items.Add(kategori);
             }
 
             txtKategori.Clear();
-            
+
         }
 
         private void lbKategorier_SelectedIndexChanged(object sender, EventArgs e)
@@ -99,15 +102,10 @@ namespace ProjektC
 
         private void cbKategori_SelectedIndexChanged(object sender, EventArgs e)
         {
-           
+           foreach(var n in KategoriLista) { cbKategori.Text = n.ToString(); }
 
-            foreach (var n in KategoriLista)
-            {
-                cbKategori.Text = n.ToString(); 
-            }
-            UpdateKategoriListan();
-
+            UpdateKategoriListan(); 
         }
-    }
 
+    }
 }
