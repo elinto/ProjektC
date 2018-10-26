@@ -20,10 +20,15 @@ namespace ProjektC
         
         List<string> KategoriLista = new List<string>();
         List<Podcast> PodcastLista = new List<Podcast>();
+ 
 
         public Podcasts()
         {
             InitializeComponent();
+            cbFrekvens.Items.Add("Var 10:e minut");
+            cbFrekvens.Items.Add("Var 20:e minut");
+            cbFrekvens.Items.Add("Var 30:e minut");
+
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -72,10 +77,18 @@ namespace ProjektC
         }
 
         private void UpdatePodcastListan() {
+
             foreach (var pod in PodcastLista) {
                 //Här ska de va kod hör kopplar vi nyknappen till själva rutan.
-                lvPodcasts.Items.Add(pod.ToString());
-            }
+                // lvPodcasts.Items.Add(pod.Url.ToString());
+                ListViewItem item = new ListViewItem(txtURL.Text);
+                item.SubItems.Add(cbFrekvens.Text);
+                item.SubItems.Add(cbKategori.Text);
+
+                lvPodcasts.Items.Add(item);
+                txtURL.Clear();
+                txtURL.Focus();
+          }
 
         }
 
@@ -120,6 +133,7 @@ namespace ProjektC
             {
                 p.Url = txtURL.Text;
                 p.Kategori = cbKategori.SelectedItem.ToString();
+                p.Uppdateringsfrekvens = cbFrekvens.SelectedItem.ToString();
                 PodcastLista.Add(p);
             }
             UpdatePodcastListan();
