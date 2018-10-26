@@ -10,5 +10,6 @@ namespace ProjektC.BLL
     {
         public string Url { get; set; }
         public string Kategori { get; set; }
+        public string Uppdateringsfrekvens { get; set; }
     }
 }

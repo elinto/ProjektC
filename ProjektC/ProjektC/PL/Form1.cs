@@ -73,7 +73,8 @@ namespace ProjektC
 
         private void UpdatePodcastListan() {
             foreach (var pod in PodcastLista) {
-                //Här ska de va kod
+                //Här ska de va kod hör kopplar vi nyknappen till själva rutan.
+                lvPodcasts.Items.Add(pod.ToString());
             }
 
         }
@@ -115,9 +116,13 @@ namespace ProjektC
             //Måste först göra en instans av en klass för att
             // kunna anropa dess klasser 
             var p = new Podcast();
-            p.Url = txtURL.Text;
-            p.Kategori = cbKategori.SelectedItem.ToString();
-            PodcastLista.Add(p);
+            if (!PodcastLista.Contains(p))
+            {
+                p.Url = txtURL.Text;
+                p.Kategori = cbKategori.SelectedItem.ToString();
+                PodcastLista.Add(p);
+            }
+            UpdatePodcastListan();
         }
     }
 }
