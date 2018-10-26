@@ -149,8 +149,42 @@ namespace ProjektC
 
         }
 
-        //private void frek(){throw new NotImplementedException();}
+        private void btnTabort_Click(object sender, EventArgs e)
+        {
+            
+            try
+            {
+                for (int i = lvPodcasts.Items.Count - 1; i >= 0; i--)
+                {
+                    if (lvPodcasts.Items[i].Selected)
+                    {
+                        lvPodcasts.Items[i].Remove();
+                    }
+                }
 
-        //private void Podcast(){throw new NotImplementedException}
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+        }
+
+        private void lvPodcasts_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                 lvPodcasts.Select();
+                
+            }
+            catch (Exception ex) { Console.WriteLine(ex); }
+        }
+
     }
-}
+    }
+
+    //private void frek(){throw new NotImplementedException();}
+
+    //private void Podcast(){throw new NotImplementedException}
+
