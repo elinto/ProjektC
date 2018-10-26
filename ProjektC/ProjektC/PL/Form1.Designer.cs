@@ -178,7 +178,7 @@
             this.btnTabort.TabIndex = 9;
             this.btnTabort.Text = "Ta bort...";
             this.btnTabort.UseVisualStyleBackColor = true;
-            this.btnTabort.Click += new System.EventHandler(this.btnTabort_Click);
+            
             // 
             // lbAvsnitt
             // 
