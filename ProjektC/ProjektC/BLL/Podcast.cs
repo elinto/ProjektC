@@ -10,25 +10,23 @@ namespace ProjektC.BLL
     {
         public string Url { get; set; }
         public string Kategori { get; set; }
-        string Uppdateringsfrekvens
-        { get; set; }
+        public string Uppdateringsfrekvens { get; set; }
 
 
 
         //public Podcast(string upp) {
 
-           // upp = Uppdateringsfrekvens; }
+        // upp = Uppdateringsfrekvens; }
 
-       // public string Upddateringsfrekvens() {
-            //get
-          //{
-            //    return "hej";
-           // }
-        } }
+        // public string Upddateringsfrekvens() {
 
-
+        // {
+        //    return "hej";
+        // }
+        // } }
 
 
 
     }
-}
+
+    }
