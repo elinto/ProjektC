@@ -169,6 +169,7 @@
             this.btnSpara.TabIndex = 8;
             this.btnSpara.Text = "Spara";
             this.btnSpara.UseVisualStyleBackColor = true;
+            this.btnSpara.Click += new System.EventHandler(this.btnSpara_Click);
             // 
             // btnTabort
             // 

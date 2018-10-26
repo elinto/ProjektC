@@ -181,6 +181,10 @@ namespace ProjektC
             catch (Exception ex) { Console.WriteLine(ex); }
         }
 
+        private void btnSpara_Click(object sender, EventArgs e)
+        {     
+            
+        }
     }
     }
 
