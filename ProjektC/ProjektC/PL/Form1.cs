@@ -19,6 +19,7 @@ namespace ProjektC
 
 
         List<string> KategoriLista = new List<string>();
+        List<Podcast> PodcastLista = new List<Podcast>();
 
         public Podcasts()
         {
@@ -70,6 +71,13 @@ namespace ProjektC
 
         }
 
+        private void UpdatePodcastListan() {
+            foreach (var pod in PodcastLista) {
+                //Här ska de va kod
+            }
+
+        }
+
         private void lbKategorier_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
@@ -84,12 +92,7 @@ namespace ProjektC
             try
             {
                 var deliteItem = lbKategorier.SelectedItem.ToString();
-
-                //test
-
                 KategoriLista.Remove(deliteItem);
-
-
                 UpdateKategoriListan();
 
             }
@@ -103,10 +106,18 @@ namespace ProjektC
 
         private void cbKategori_SelectedIndexChanged(object sender, EventArgs e)
         {
-           foreach(var n in KategoriLista) { cbKategori.Text = n.ToString(); }
+            
 
-            UpdateKategoriListan(); 
         }
 
+        private void btnNy_Click(object sender, EventArgs e)
+        {
+            //Måste först göra en instans av en klass för att
+            // kunna anropa dess klasser 
+            var p = new Podcast();
+            p.Url = txtURL.Text;
+            p.Kategori = cbKategori.SelectedItem.ToString();
+            PodcastLista.Add(p);
+        }
     }
 }

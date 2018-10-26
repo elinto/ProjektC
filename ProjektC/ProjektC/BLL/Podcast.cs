@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace ProjektC.BLL
 {
-    public class Kategori
+    public class Podcast
     {
-        public string Name { get; set; }
+        public string Url { get; set; }
+        public string Kategori { get; set; }
     }
 }
