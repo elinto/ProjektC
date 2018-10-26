@@ -61,6 +61,8 @@
             this.Namn,
             this.Frekvens,
             this.Kategori});
+            this.lvPodcasts.FullRowSelect = true;
+            this.lvPodcasts.GridLines = true;
             this.lvPodcasts.Location = new System.Drawing.Point(52, 38);
             this.lvPodcasts.Name = "lvPodcasts";
             this.lvPodcasts.Size = new System.Drawing.Size(550, 229);
@@ -168,6 +170,7 @@
             this.btnTabort.TabIndex = 9;
             this.btnTabort.Text = "Ta bort...";
             this.btnTabort.UseVisualStyleBackColor = true;
+            this.btnTabort.Click += new System.EventHandler(this.btnTabort_Click);
             // 
             // lbAvsnitt
             // 
