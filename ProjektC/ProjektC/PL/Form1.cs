@@ -17,7 +17,7 @@ namespace ProjektC
         private HttpClient Client = new HttpClient();
         //private WebPageList listofwebpages = new WebPageList(); 
 
-
+        
         List<string> KategoriLista = new List<string>();
         List<Podcast> PodcastLista = new List<Podcast>();
 
@@ -124,5 +124,17 @@ namespace ProjektC
             }
             UpdatePodcastListan();
         }
+
+        private void cbFrekvens_SelectedIndexChanged(object sender, EventArgs e)
+        {
+          // frek();  
+                 
+       
+
+        }
+
+        //private void frek(){throw new NotImplementedException();}
+
+        //private void Podcast(){throw new NotImplementedException}
     }
 }
