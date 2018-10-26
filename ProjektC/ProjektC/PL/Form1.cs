@@ -141,9 +141,11 @@ namespace ProjektC
 
         private void cbFrekvens_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //var p = new Podcast();
+            //p.Upddateringsfrekvens = cbFrekvens.ToString();
           // frek();  
-                 
-       
+
+
 
         }
 
