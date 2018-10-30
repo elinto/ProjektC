@@ -51,7 +51,7 @@
             this.btnSparaKategori = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
-            this.lbBeskrivning = new System.Windows.Forms.ListBox();
+            this.txtBeskrivning = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // lvPodcasts
@@ -97,7 +97,6 @@
             this.label1.Size = new System.Drawing.Size(46, 20);
             this.label1.TabIndex = 1;
             this.label1.Text = "URL:";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // txtURL
             // 
@@ -131,7 +130,6 @@
             this.cbFrekvens.Name = "cbFrekvens";
             this.cbFrekvens.Size = new System.Drawing.Size(174, 28);
             this.cbFrekvens.TabIndex = 5;
-            this.cbFrekvens.SelectedIndexChanged += new System.EventHandler(this.cbFrekvens_SelectedIndexChanged);
             // 
             // cbKategori
             // 
@@ -140,7 +138,6 @@
             this.cbKategori.Name = "cbKategori";
             this.cbKategori.Size = new System.Drawing.Size(121, 28);
             this.cbKategori.TabIndex = 6;
-            this.cbKategori.SelectedIndexChanged += new System.EventHandler(this.cbKategori_SelectedIndexChanged);
             // 
             // btnNy
             // 
@@ -179,7 +176,7 @@
             this.lbAvsnitt.Name = "lbAvsnitt";
             this.lbAvsnitt.Size = new System.Drawing.Size(546, 144);
             this.lbAvsnitt.TabIndex = 10;
-            this.lbAvsnitt.SelectedIndexChanged += new System.EventHandler(this.lbAvsnitt_SelectedIndexChanged_1);
+            this.lbAvsnitt.SelectedIndexChanged += new System.EventHandler(this.lbAvsnitt_SelectedIndexChanged);
             // 
             // label4
             // 
@@ -255,21 +252,20 @@
             this.label6.TabIndex = 18;
             this.label6.Text = "Beskrivning";
             // 
-            // lbBeskrivning
+            // txtBeskrivning
             // 
-            this.lbBeskrivning.FormattingEnabled = true;
-            this.lbBeskrivning.ItemHeight = 20;
-            this.lbBeskrivning.Location = new System.Drawing.Point(681, 485);
-            this.lbBeskrivning.Name = "lbBeskrivning";
-            this.lbBeskrivning.Size = new System.Drawing.Size(278, 144);
-            this.lbBeskrivning.TabIndex = 19;
+            this.txtBeskrivning.Location = new System.Drawing.Point(691, 485);
+            this.txtBeskrivning.Multiline = true;
+            this.txtBeskrivning.Name = "txtBeskrivning";
+            this.txtBeskrivning.Size = new System.Drawing.Size(241, 144);
+            this.txtBeskrivning.TabIndex = 19;
             // 
             // Podcasts
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(988, 663);
-            this.Controls.Add(this.lbBeskrivning);
+            this.Controls.Add(this.txtBeskrivning);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnSparaKategori);
@@ -321,7 +317,7 @@
         public System.Windows.Forms.ColumnHeader Namn;
         public System.Windows.Forms.ColumnHeader Frekvens;
         public System.Windows.Forms.ColumnHeader Kategori;
-        private System.Windows.Forms.ListBox lbBeskrivning;
+        private System.Windows.Forms.TextBox txtBeskrivning;
     }
 }
 

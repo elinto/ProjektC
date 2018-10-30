@@ -1,15 +1,7 @@
 ﻿using ProjektC.BLL;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.ServiceModel.Syndication;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -17,14 +9,9 @@ namespace ProjektC
 {
     public partial class Podcasts : Form
     {
-        private HttpClient Client = new HttpClient();
-        //private WebPageList listofwebpages = new WebPageList(); 
-
-        
         List<string> KategoriLista = new List<string>();
         List<Podcast> PodcastLista = new List<Podcast>();
-
-        public object AvsnittLista { get; private set; }
+        Podcast valdPodcast = null;
 
         public Podcasts()
         {
@@ -32,11 +19,6 @@ namespace ProjektC
             cbFrekvens.Items.Add("Var 10:e minut");
             cbFrekvens.Items.Add("Var 20:e minut");
             cbFrekvens.Items.Add("Var 30:e minut");
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
 
         }
 
@@ -50,8 +32,6 @@ namespace ProjektC
                 KategoriLista[index] = newvalue;
             }
             UpdateKategoriListan();
-
-
 
         }
 
@@ -77,14 +57,19 @@ namespace ProjektC
             }
 
             txtKategori.Clear();
-
         }
 
-        private void UpdatePodcastListan() {
+        private void UpdatePodcastListan()
+        {
+            foreach (var pod in PodcastLista)
+            {
 
-            foreach (var pod in PodcastLista) {
-
-                var item1 = new ListViewItem(new[] { pod.Namn, pod.AntalAvsnitt, pod.Uppdateringsfrekvens, pod.Kategori });
+                var item1 = new ListViewItem(new[] {
+                    pod.Namn,
+                    pod.AntalAvsnitt,
+                    pod.Uppdateringsfrekvens,
+                    pod.Kategori
+                });
 
                 lvPodcasts.Items.Add(item1);
             }
@@ -108,7 +93,6 @@ namespace ProjektC
                 var deliteItem = lbKategorier.SelectedItem.ToString();
                 KategoriLista.Remove(deliteItem);
                 UpdateKategoriListan();
-
             }
 
             catch (Exception ex)
@@ -118,69 +102,34 @@ namespace ProjektC
 
         }
 
-        private void cbKategori_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            
-
-        }
-
         private void btnNy_Click(object sender, EventArgs e)
         {
-            //var MyRequest = WebRequest.Create(txtURL.Text);
-            //var MyRespone = MyRequest.GetResponse();
-
-            //var stream = MyRespone.GetResponseStream();
-            //var xmlDoc = new XmlDocument();
-            //xmlDoc.Load(stream);
-            XmlDocument document = new XmlDocument();
+            var document = new XmlDocument();
             document.Load(txtURL.Text);
             var title = document.SelectSingleNode("rss/channel/title");
             var avsnittLista = document.SelectNodes("rss/channel/item");
-            //var avsnittLista = xmlDoc.SelectNodes("rss/channel/item");
-            //var title = xmlDoc.SelectSingleNode("rss/channel/title");
+
             var p = new Podcast();
             p.Url = txtURL.Text;
             p.AntalAvsnitt = avsnittLista.Count.ToString();
             p.Namn = title.InnerText;
+            p.Kategori = cbKategori.SelectedItem.ToString();
+            p.Uppdateringsfrekvens = cbFrekvens.SelectedItem.ToString();
 
             foreach (XmlNode xmlAvsnitt in avsnittLista)
             {
                 var avsnitt = new PodcastAvsnitt();
                 avsnitt.Titel = xmlAvsnitt.SelectSingleNode("title").InnerText;
                 avsnitt.Beskrivning = xmlAvsnitt.SelectSingleNode("description").InnerText;
-
-
-                //avsnitt.Titel = avsnittTitel;
-                //avsnitt.Beskrivning = avsnittBeskrivning.ToString();
-
                 p.AvsnittLista.Add(avsnitt);
-
             }
-
-
-            if (!PodcastLista.Contains(p))
-            {
-                p.Url = txtURL.Text;
-                p.Kategori = cbKategori.SelectedItem.ToString();
-                p.Uppdateringsfrekvens = cbFrekvens.SelectedItem.ToString();
-                PodcastLista.Add(p);
-            }
+            PodcastLista.Add(p);
             UpdatePodcastListan();
-        }
-
-        private void cbFrekvens_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //var p = new Podcast();
-            //p.Upddateringsfrekvens = cbFrekvens.ToString();
-          // frek();  
-
-
-
         }
 
         private void btnTabort_Click(object sender, EventArgs e)
         {
-            
+
             try
             {
                 for (int i = lvPodcasts.Items.Count - 1; i >= 0; i--)
@@ -188,9 +137,9 @@ namespace ProjektC
                     if (lvPodcasts.Items[i].Selected)
                     {
                         lvPodcasts.Items[i].Remove();
+                        PodcastLista.RemoveAt(i);
                     }
                 }
-
             }
 
             catch (Exception ex)
@@ -204,17 +153,17 @@ namespace ProjektC
         {
             try
             {
-                var foo = lvPodcasts.SelectedItems[0].Text;
-                Console.WriteLine(foo);
+                var selectedPodcastNamn = lvPodcasts.SelectedItems[0].Text;
 
-                Podcast pod = PodcastLista.Find(x => x.Namn == foo);
+                var pod = PodcastLista.Find(x => x.Namn == selectedPodcastNamn);
+                valdPodcast = pod;
 
-                foreach(var avsnitt in pod.AvsnittLista)
+                foreach (var avsnitt in pod.AvsnittLista)
                 {
                     lbAvsnitt.Items.Add(avsnitt.Titel);
                 }
-                
-                
+
+
             }
             catch (Exception ex) { Console.WriteLine(ex); }
         }
@@ -233,42 +182,21 @@ namespace ProjektC
             //UpdatePodcastListan();
         }
 
-        //private void lbAvsnitt_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        var listan = new Podcast();
-        //        var boo = lbAvsnitt.SelectedItems.ToString();
-        //        Console.WriteLine(boo);
-
-        //        var pod = listan.AvsnittLista.Find(x => x.Titel == boo);
-
-        //        foreach (var avsnitt in Listan)
-        //        {
-        //            lbAvsnitt.Items.Add(avsnitt.Titel);
-        //        }
-
-
-
-
-        //    }
-        //    catch (Exception ex) { Console.WriteLine(ex); }
-        //}
-
-        private void lbAvsnitt_SelectedIndexChanged_1(object sender, EventArgs e)
+        private void lbAvsnitt_SelectedIndexChanged(object sender, EventArgs e)
         {
+            try
+            {
+                var valtAvsnittTitel = lbAvsnitt.SelectedItem.ToString();
 
-        }
+                var valtAvsnitt = valdPodcast.AvsnittLista.Find(x => x.Titel == valtAvsnittTitel);
 
-        private void rTxtBeskrivning_TextChanged(object sender, EventArgs e)
-        {
+                txtBeskrivning.Text = valtAvsnitt.Beskrivning;
 
+            }
+            catch (Exception ex) { Console.WriteLine(ex); }
         }
 
     }
-    }
+}
 
-    //private void frek(){throw new NotImplementedException();}
-
-    //private void Podcast(){throw new NotImplementedException}
 

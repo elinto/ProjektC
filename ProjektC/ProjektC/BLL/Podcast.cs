@@ -16,20 +16,6 @@ namespace ProjektC.BLL
         public List<PodcastAvsnitt> AvsnittLista = new List<PodcastAvsnitt>();
         
 
-
-        //public Podcast(string upp) {
-
-        // upp = Uppdateringsfrekvens; }
-
-        // public string Upddateringsfrekvens() {
-
-        // {
-        //    return "hej";
-        // }
-        // } }
-
-
-
     }
     public class Exceptions : Exception
     {
