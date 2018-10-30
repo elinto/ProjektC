@@ -51,7 +51,7 @@
             this.btnSparaKategori = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
-            this.rTxtBeskrivning = new System.Windows.Forms.RichTextBox();
+            this.lbBeskrivning = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // lvPodcasts
@@ -105,7 +105,6 @@
             this.txtURL.Name = "txtURL";
             this.txtURL.Size = new System.Drawing.Size(222, 26);
             this.txtURL.TabIndex = 2;
-            this.txtURL.Text = "http//...";
             // 
             // label2
             // 
@@ -132,7 +131,6 @@
             this.cbFrekvens.Name = "cbFrekvens";
             this.cbFrekvens.Size = new System.Drawing.Size(174, 28);
             this.cbFrekvens.TabIndex = 5;
-            this.cbFrekvens.Text = "Var 10:e minut";
             this.cbFrekvens.SelectedIndexChanged += new System.EventHandler(this.cbFrekvens_SelectedIndexChanged);
             // 
             // cbKategori
@@ -162,7 +160,6 @@
             this.btnSpara.TabIndex = 8;
             this.btnSpara.Text = "Spara";
             this.btnSpara.UseVisualStyleBackColor = true;
-           
             // 
             // btnTabort
             // 
@@ -182,6 +179,7 @@
             this.lbAvsnitt.Name = "lbAvsnitt";
             this.lbAvsnitt.Size = new System.Drawing.Size(546, 144);
             this.lbAvsnitt.TabIndex = 10;
+            this.lbAvsnitt.SelectedIndexChanged += new System.EventHandler(this.lbAvsnitt_SelectedIndexChanged_1);
             // 
             // label4
             // 
@@ -251,26 +249,27 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(674, 371);
+            this.label6.Location = new System.Drawing.Point(677, 445);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(90, 20);
             this.label6.TabIndex = 18;
             this.label6.Text = "Beskrivning";
             // 
-            // rTxtBeskrivning
+            // lbBeskrivning
             // 
-            this.rTxtBeskrivning.Location = new System.Drawing.Point(672, 402);
-            this.rTxtBeskrivning.Name = "rTxtBeskrivning";
-            this.rTxtBeskrivning.Size = new System.Drawing.Size(271, 172);
-            this.rTxtBeskrivning.TabIndex = 19;
-            this.rTxtBeskrivning.Text = "";
+            this.lbBeskrivning.FormattingEnabled = true;
+            this.lbBeskrivning.ItemHeight = 20;
+            this.lbBeskrivning.Location = new System.Drawing.Point(681, 485);
+            this.lbBeskrivning.Name = "lbBeskrivning";
+            this.lbBeskrivning.Size = new System.Drawing.Size(278, 144);
+            this.lbBeskrivning.TabIndex = 19;
             // 
             // Podcasts
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(988, 663);
-            this.Controls.Add(this.rTxtBeskrivning);
+            this.Controls.Add(this.lbBeskrivning);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnSparaKategori);
@@ -318,11 +317,11 @@
         private System.Windows.Forms.Button btnSparaKategori;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.RichTextBox rTxtBeskrivning;
         public System.Windows.Forms.ColumnHeader Avsnitt;
         public System.Windows.Forms.ColumnHeader Namn;
         public System.Windows.Forms.ColumnHeader Frekvens;
         public System.Windows.Forms.ColumnHeader Kategori;
+        private System.Windows.Forms.ListBox lbBeskrivning;
     }
 }
 

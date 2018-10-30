@@ -14,6 +14,7 @@ namespace ProjektC.BLL
         public string AntalAvsnitt { get; set; }
         public string Namn { get; set; }
         public List<PodcastAvsnitt> AvsnittLista = new List<PodcastAvsnitt>();
+        
 
 
         //public Podcast(string upp) {
