@@ -5,11 +5,14 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.ServiceModel.Syndication;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
- 
+using System.Xml;
+
 namespace ProjektC
 {
     public partial class Podcasts : Form
@@ -79,16 +82,12 @@ namespace ProjektC
         private void UpdatePodcastListan() {
 
             foreach (var pod in PodcastLista) {
-                //Här ska de va kod hör kopplar vi nyknappen till själva rutan.
-                // lvPodcasts.Items.Add(pod.Url.ToString());
-                ListViewItem item = new ListViewItem(txtURL.Text);
-                item.SubItems.Add(cbFrekvens.Text);
-                item.SubItems.Add(cbKategori.Text);
 
-                lvPodcasts.Items.Add(item);
-                txtURL.Clear();
-                txtURL.Focus();
-          }
+                var item1 = new ListViewItem(new[] { pod.AntalAvsnitt, pod.Namn, pod.Uppdateringsfrekvens, pod.Kategori });
+
+                lvPodcasts.Items.Add(item1);
+            }
+            txtURL.Clear();
 
         }
 
@@ -126,9 +125,43 @@ namespace ProjektC
 
         private void btnNy_Click(object sender, EventArgs e)
         {
-            //Måste först göra en instans av en klass för att
-            // kunna anropa dess klasser 
+            var MyRequest = WebRequest.Create(txtURL.Text);
+            var MyRespone = MyRequest.GetResponse();
+
+            var stream = MyRespone.GetResponseStream();
+            var xmlDoc = new XmlDocument();
+            xmlDoc.Load(stream);
+
+            var avsnittLista = xmlDoc.SelectNodes("rss/channel/item");
+            var title = xmlDoc.SelectSingleNode("rss/channel/title");
             var p = new Podcast();
+            p.Url = txtURL.Text;
+            p.AntalAvsnitt = avsnittLista.Count.ToString();
+            p.Namn = title.InnerText;
+
+            //try
+            //{
+            //    xmlDoc.Save();
+            //}
+            //catch {
+            //    throw new XmlException();
+            //}
+          
+            //foreach (XmlNode xmlAvsnitt in avsnittLista)
+            //{
+            //    var avsnitt = new PodcastAvsnitt();
+            //    var avsnittTitel = xmlAvsnitt.SelectSingleNode("rss/title");
+            //    var avsnittBeskrivning = xmlAvsnitt.SelectSingleNode("rss/description");
+
+
+            //    avsnitt.Titel = avsnittTitel.InnerText;
+            //    avsnitt.Beskrivning = avsnittBeskrivning.InnerText;
+
+            //    p.AvsnittLista.Add(avsnitt);
+
+            //}
+
+
             if (!PodcastLista.Contains(p))
             {
                 p.Url = txtURL.Text;
@@ -175,16 +208,31 @@ namespace ProjektC
         {
             try
             {
-                 lvPodcasts.Select();
+                 lvPodcasts.Text = lbAvsnitt.SelectedItems.ToString();
                 
             }
             catch (Exception ex) { Console.WriteLine(ex); }
         }
 
+
         private void btnSpara_Click(object sender, EventArgs e)
-        {     
-            
+        {
+
+            //var oldValue = lvPodcasts.SelectedItems;
+            //var newvalue = txtURL.Text;
+            //int index = PodcastLista.IndexOf();
+            //if (index != -1)
+            //{
+            //    KategoriLista[index] = newvalue;
+            //}
+            //UpdatePodcastListan();
         }
+
+        private void lbAvsnitt_SelectedIndexChanged(object sender, EventArgs e)
+        {
+           
+        }
+
     }
     }
 
