@@ -1,4 +1,5 @@
 ﻿using ProjektC.BLL;
+using ProjektC.DAL;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -19,6 +20,9 @@ namespace ProjektC
             cbFrekvens.Items.Add("Var 10:e minut");
             cbFrekvens.Items.Add("Var 20:e minut");
             cbFrekvens.Items.Add("Var 30:e minut");
+
+            PodcastLista = PodcastSerializer.GetPodcasts();
+            UpdatePodcastListan();
 
         }
 
@@ -125,6 +129,7 @@ namespace ProjektC
             }
             PodcastLista.Add(p);
             UpdatePodcastListan();
+            PodcastSerializer.SavePodcasts(PodcastLista);
         }
 
         private void btnTabort_Click(object sender, EventArgs e)
