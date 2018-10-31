@@ -61,6 +61,7 @@
             this.Namn,
             this.Frekvens,
             this.Kategori});
+            this.lvPodcasts.FullRowSelect = true;
             this.lvPodcasts.Location = new System.Drawing.Point(78, 58);
             this.lvPodcasts.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.lvPodcasts.Name = "lvPodcasts";

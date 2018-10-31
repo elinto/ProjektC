@@ -188,6 +188,12 @@ namespace ProjektC
 
         private void lvPodcasts_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if(lvPodcasts.SelectedItems.Count == 0)
+            {
+                ClearPodcastInputs();
+                return;
+            }
+
             try
             {
                 var selectedPodcastNamn = lvPodcasts.SelectedItems[0].Text;
@@ -198,13 +204,10 @@ namespace ProjektC
                 cbFrekvens.Text = valdPodcast.Uppdateringsfrekvens;
                 cbKategori.Text = valdPodcast.Kategori;
 
-
                 foreach (var avsnitt in pod.AvsnittLista)
                 {
                     lbAvsnitt.Items.Add(avsnitt.Titel);
                 }
-
-
             }
             catch (Exception ex)
             {
