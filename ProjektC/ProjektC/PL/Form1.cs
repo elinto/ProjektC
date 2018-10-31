@@ -2,7 +2,6 @@
 using ProjektC.DAL;
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -199,6 +198,10 @@ namespace ProjektC
 
                 var pod = PodcastLista.Find(x => x.Namn == selectedPodcastNamn);
                 valdPodcast = pod;
+                txtURL.Text = valdPodcast.Url;
+                cbFrekvens.Text = valdPodcast.Uppdateringsfrekvens;
+                cbKategori.Text = valdPodcast.Kategori;
+
 
                 foreach (var avsnitt in pod.AvsnittLista)
                 {
@@ -251,8 +254,7 @@ namespace ProjektC
                 txtBeskrivning.Text = valtAvsnitt.Beskrivning;
 
             }
-            catch (PodcastException ex)
-            {
+            catch (PodcastException ex) {
                 Console.WriteLine(ex);
             }
         }
