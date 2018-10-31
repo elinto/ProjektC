@@ -38,6 +38,7 @@ namespace ProjektC
                 KategoriLista[index] = newvalue;
             }
             UpdateKategoriListan();
+            KategoriSerializer.SaveKategorier(KategoriLista);
 
         }
 
@@ -149,6 +150,8 @@ namespace ProjektC
                         PodcastLista.RemoveAt(i);
                     }
                 }
+                UpdatePodcastListan();
+                PodcastSerializer.SavePodcasts(PodcastLista);
             }
 
             catch (Exception ex)
@@ -180,15 +183,27 @@ namespace ProjektC
 
         private void btnSpara_Click(object sender, EventArgs e)
         {
+            try
+            {
+                var selectedPodcastNamn = lvPodcasts.SelectedItems[0].Text;
+                var pod = PodcastLista.Find(x => x.Namn == selectedPodcastNamn);
+                valdPodcast = pod;
+                
 
-            //var oldValue = lvPodcasts.SelectedItems;
-            //var newvalue = txtURL.Text;
-            //int index = PodcastLista.IndexOf();
-            //if (index != -1)
-            //{
-            //    KategoriLista[index] = newvalue;
-            //}
-            //UpdatePodcastListan();
+
+            //        //var oldValue = lbKategorier.SelectedItem.ToString();
+            //var newvalue = txtKategori.Text;
+            //int index = KategoriLista.IndexOf(oldValue);
+            //    if (index != -1)
+            //    {
+            //        KategoriLista[index] = newvalue;
+            //    }
+
+                UpdatePodcastListan();
+                PodcastSerializer.SavePodcasts(PodcastLista);
+
+            }
+            catch { }
         }
 
         private void lbAvsnitt_SelectedIndexChanged(object sender, EventArgs e)
