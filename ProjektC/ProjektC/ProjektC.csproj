@@ -48,11 +48,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLL\ErrorHandler.cs" />
-    <Compile Include="BLL\Exceptions.cs" />
     <Compile Include="BLL\ITitle.cs" />
     <Compile Include="BLL\Podcast.cs" />
     <Compile Include="BLL\PodcastAvsnitt.cs" />
     <Compile Include="BLL\PodcastHelper.cs" />
+    <Compile Include="BLL\Validering\ComboboxValiderare.cs" />
+    <Compile Include="BLL\Validering\TextValiderare.cs" />
+    <Compile Include="BLL\Validering\UrlValiderare.cs" />
+    <Compile Include="BLL\Validering\ValideringsException.cs" />
     <Compile Include="DAL\KategoriSerializer.cs" />
     <Compile Include="DAL\PodcastSerializer.cs" />
     <Compile Include="PL\Form1.cs">

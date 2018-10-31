@@ -1,4 +1,5 @@
 ﻿using ProjektC.BLL;
+using ProjektC.BLL.Validering;
 using ProjektC.DAL;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,12 @@ namespace ProjektC
 {
     public partial class Podcasts : Form
     {
-        List<string> KategoriLista = new List<string>();
-        List<Podcast> PodcastLista = new List<Podcast>();
-        Podcast valdPodcast = null;
+        private List<string> KategoriLista = new List<string>();
+        private List<Podcast> PodcastLista = new List<Podcast>();
+        private Podcast valdPodcast = null;
+        private UrlValiderare urlValiderare = new UrlValiderare();
+        private TextValiderare textValiderare = new TextValiderare();
+        private ComboboxValiderare comboboxValiderare = new ComboboxValiderare();
 
         public Podcasts()
         {
@@ -60,6 +64,8 @@ namespace ProjektC
         {
             try
             {
+                textValiderare.ValideraInput(txtKategori.Text);
+
                 var oldValue = lbKategorier.SelectedItem.ToString();
                 var newvalue = txtKategori.Text;
                 int index = KategoriLista.IndexOf(oldValue);
@@ -87,6 +93,8 @@ namespace ProjektC
         {
             try
             {
+                textValiderare.ValideraInput(txtKategori.Text);
+
                 var kategori = txtKategori.Text;
                 if (!KategoriLista.Contains(kategori))
                 {
@@ -95,7 +103,6 @@ namespace ProjektC
                 UpdateKategoriListan();
                 KategoriSerializer.SaveKategorier(KategoriLista);
             }
-
             catch (Exception ex)
             {
                 ErrorHandler.HanteraFel(ex);
@@ -186,6 +193,10 @@ namespace ProjektC
         {
             try
             {
+                urlValiderare.ValideraInput(txtURL.Text);
+                comboboxValiderare.ValideraInput((string)cbFrekvens.SelectedItem);
+                comboboxValiderare.ValideraInput((string)cbKategori.SelectedItem);
+
                 var document = new XmlDocument();
                 document.Load(txtURL.Text);
                 var title = document.SelectSingleNode("rss/channel/title");
@@ -269,14 +280,16 @@ namespace ProjektC
             {
                 lbAvsnitt.Items.Add(avsnitt.Titel);
             }
-
         }
-
 
         private void btnSpara_Click(object sender, EventArgs e)
         {
             try
             {
+                urlValiderare.ValideraInput(txtURL.Text);
+                comboboxValiderare.ValideraInput((string)cbFrekvens.SelectedItem);
+                comboboxValiderare.ValideraInput((string)cbKategori.SelectedItem);
+
                 var document = new XmlDocument();
                 document.Load(txtURL.Text);
                 var title = document.SelectSingleNode("rss/channel/title");
