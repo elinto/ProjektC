@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLL\Exceptions.cs" />
     <Compile Include="BLL\Podcast.cs" />
     <Compile Include="BLL\PodcastAvsnitt.cs" />
     <Compile Include="DAL\KategoriSerializer.cs" />
