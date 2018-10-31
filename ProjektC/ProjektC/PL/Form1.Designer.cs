@@ -157,6 +157,7 @@
             this.btnSpara.TabIndex = 8;
             this.btnSpara.Text = "Spara";
             this.btnSpara.UseVisualStyleBackColor = true;
+            this.btnSpara.Click += new System.EventHandler(this.btnSpara_Click);
             // 
             // btnTabort
             // 
@@ -172,7 +173,7 @@
             // 
             this.lbAvsnitt.FormattingEnabled = true;
             this.lbAvsnitt.ItemHeight = 20;
-            this.lbAvsnitt.Location = new System.Drawing.Point(57, 485);
+            this.lbAvsnitt.Location = new System.Drawing.Point(57, 472);
             this.lbAvsnitt.Name = "lbAvsnitt";
             this.lbAvsnitt.Size = new System.Drawing.Size(546, 144);
             this.lbAvsnitt.TabIndex = 10;
@@ -246,7 +247,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(677, 445);
+            this.label6.Location = new System.Drawing.Point(677, 435);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(90, 20);
             this.label6.TabIndex = 18;
@@ -254,7 +255,7 @@
             // 
             // txtBeskrivning
             // 
-            this.txtBeskrivning.Location = new System.Drawing.Point(691, 485);
+            this.txtBeskrivning.Location = new System.Drawing.Point(680, 472);
             this.txtBeskrivning.Multiline = true;
             this.txtBeskrivning.Name = "txtBeskrivning";
             this.txtBeskrivning.Size = new System.Drawing.Size(241, 144);
@@ -264,7 +265,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(988, 663);
+            this.ClientSize = new System.Drawing.Size(1161, 663);
             this.Controls.Add(this.txtBeskrivning);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.btnDelete);

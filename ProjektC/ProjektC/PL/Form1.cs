@@ -42,9 +42,9 @@ namespace ProjektC
                 KategoriSerializer.SaveKategorier(KategoriLista);
             }
 
-            catch (PodcastException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                ErrorHandler.HanteraFel(ex);
             }
 
         }
@@ -63,9 +63,9 @@ namespace ProjektC
                 KategoriSerializer.SaveKategorier(KategoriLista);
             }
 
-            catch (PodcastException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                ErrorHandler.HanteraFel(ex);
             }
 
         }
@@ -86,9 +86,10 @@ namespace ProjektC
 
         private void UpdatePodcastListan()
         {
+            lvPodcasts.Items.Clear();
+
             foreach (var pod in PodcastLista)
             {
-
                 var item1 = new ListViewItem(new[] {
                     pod.Namn,
                     pod.AntalAvsnitt,
@@ -98,8 +99,6 @@ namespace ProjektC
 
                 lvPodcasts.Items.Add(item1);
             }
-            txtURL.Clear();
-
         }
 
         private void lbKategorier_SelectedIndexChanged(object sender, EventArgs e)
@@ -108,9 +107,9 @@ namespace ProjektC
             {
                 txtKategori.Text = lbKategorier.SelectedItem.ToString();
             }
-            catch (PodcastException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                ErrorHandler.HanteraFel(ex);
             }
         }
 
@@ -124,16 +123,15 @@ namespace ProjektC
                 KategoriSerializer.SaveKategorier(KategoriLista);
             }
 
-            catch (PodcastException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                ErrorHandler.HanteraFel(ex);
             }
 
         }
 
         private void btnNy_Click(object sender, EventArgs e)
         {
-
             try
             {
                 var document = new XmlDocument();
@@ -142,28 +140,26 @@ namespace ProjektC
                 var avsnittLista = document.SelectNodes("rss/channel/item");
 
                 var p = new Podcast();
-                p.Url = txtURL.Text;
-                p.AntalAvsnitt = avsnittLista.Count.ToString();
-                p.Namn = title.InnerText;
-                p.Kategori = cbKategori.SelectedItem.ToString();
-                p.Uppdateringsfrekvens = cbFrekvens.SelectedItem.ToString();
-
-                foreach (XmlNode xmlAvsnitt in avsnittLista)
-                {
-                    var avsnitt = new PodcastAvsnitt();
-                    avsnitt.Titel = xmlAvsnitt.SelectSingleNode("title").InnerText;
-                    avsnitt.Beskrivning = xmlAvsnitt.SelectSingleNode("description").InnerText;
-                    p.AvsnittLista.Add(avsnitt);
-                }
+                SetPodcastValues(p, title.InnerText, avsnittLista.Count);
+                PodcastHelper.SetAvsnitt(p, avsnittLista);
                 PodcastLista.Add(p);
                 UpdatePodcastListan();
                 PodcastSerializer.SavePodcasts(PodcastLista);
-            }
 
-            catch (PodcastException ex)
-            {
-                Console.WriteLine(ex);
+                ClearPodcastInputs();
             }
+            catch (Exception ex)
+            {
+                ErrorHandler.HanteraFel(ex);
+            }
+        }
+
+        public void SetPodcastValues(Podcast p, string title, int antalAvsnitt) {
+            p.Url = txtURL.Text;
+            p.AntalAvsnitt = antalAvsnitt.ToString();
+            p.Namn = title;
+            p.Kategori = cbKategori.SelectedItem.ToString();
+            p.Uppdateringsfrekvens = cbFrekvens.SelectedItem.ToString();
         }
 
         private void btnTabort_Click(object sender, EventArgs e)
@@ -183,9 +179,9 @@ namespace ProjektC
                 PodcastSerializer.SavePodcasts(PodcastLista);
             }
 
-            catch (PodcastException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                ErrorHandler.HanteraFel(ex);
             }
 
         }
@@ -210,9 +206,9 @@ namespace ProjektC
 
 
             }
-            catch (PodcastException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                ErrorHandler.HanteraFel(ex);
             }
         }
 
@@ -221,26 +217,30 @@ namespace ProjektC
         {
             try
             {
-                var selectedPodcastNamn = lvPodcasts.SelectedItems[0].Text;
-                var pod = PodcastLista.Find(x => x.Namn == selectedPodcastNamn);
-                valdPodcast = pod;
-
-
-
-                //        //var oldValue = lbKategorier.SelectedItem.ToString();
-                //var newvalue = txtKategori.Text;
-                //int index = KategoriLista.IndexOf(oldValue);
-                //    if (index != -1)
-                //    {
-                //        KategoriLista[index] = newvalue;
-                //    }
+                var document = new XmlDocument();
+                document.Load(txtURL.Text);
+                var title = document.SelectSingleNode("rss/channel/title");
+                var avsnittLista = document.SelectNodes("rss/channel/item");
+            
+                SetPodcastValues(valdPodcast, title.InnerText, avsnittLista.Count);
+                PodcastHelper.SetAvsnitt(valdPodcast, avsnittLista);
 
                 UpdatePodcastListan();
                 PodcastSerializer.SavePodcasts(PodcastLista);
 
+                ClearPodcastInputs();
             }
-            catch (PodcastException ex)
-            { Console.WriteLine(ex); }
+            catch (Exception ex)
+            {
+                ErrorHandler.HanteraFel(ex);
+            }
+        }
+
+        private void ClearPodcastInputs()
+        {
+            txtURL.Clear();
+            cbFrekvens.SelectedItem = null;
+            cbKategori.SelectedItem = null;
         }
 
         private void lbAvsnitt_SelectedIndexChanged(object sender, EventArgs e)
@@ -254,11 +254,10 @@ namespace ProjektC
                 txtBeskrivning.Text = valtAvsnitt.Beskrivning;
 
             }
-            catch (PodcastException ex) {
-                Console.WriteLine(ex);
+            catch (Exception ex) {
+                ErrorHandler.HanteraFel(ex);
             }
         }
-
     }
 }
 

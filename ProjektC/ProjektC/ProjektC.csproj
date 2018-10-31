@@ -47,9 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLL\ErrorHandler.cs" />
     <Compile Include="BLL\Exceptions.cs" />
     <Compile Include="BLL\Podcast.cs" />
     <Compile Include="BLL\PodcastAvsnitt.cs" />
+    <Compile Include="BLL\PodcastHelper.cs" />
     <Compile Include="DAL\KategoriSerializer.cs" />
     <Compile Include="DAL\PodcastSerializer.cs" />
     <Compile Include="PL\Form1.cs">
