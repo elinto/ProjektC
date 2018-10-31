@@ -2,6 +2,7 @@
 using ProjektC.DAL;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -84,11 +85,18 @@ namespace ProjektC
             txtKategori.Clear();
         }
 
-        private void UpdatePodcastListan()
+        private void UpdatePodcastListan(string kategoriAttFiltrera = null)
         {
             lvPodcasts.Items.Clear();
 
-            foreach (var pod in PodcastLista)
+            var podcastsAttVisa = PodcastLista;
+
+            if (kategoriAttFiltrera != null)
+            {
+                podcastsAttVisa = PodcastLista.Where(x => x.Kategori == kategoriAttFiltrera).ToList();
+            }
+
+            foreach (var pod in podcastsAttVisa)
             {
                 var item1 = new ListViewItem(new[] {
                     pod.Namn,
@@ -105,7 +113,9 @@ namespace ProjektC
         {
             try
             {
-                txtKategori.Text = lbKategorier.SelectedItem.ToString();
+                string kategori = lbKategorier.SelectedItem?.ToString();
+                txtKategori.Text = kategori;
+                UpdatePodcastListan(kategori);
             }
             catch (Exception ex)
             {
@@ -154,7 +164,8 @@ namespace ProjektC
             }
         }
 
-        public void SetPodcastValues(Podcast p, string title, int antalAvsnitt) {
+        public void SetPodcastValues(Podcast p, string title, int antalAvsnitt)
+        {
             p.Url = txtURL.Text;
             p.AntalAvsnitt = antalAvsnitt.ToString();
             p.Namn = title;
@@ -188,7 +199,7 @@ namespace ProjektC
 
         private void lvPodcasts_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(lvPodcasts.SelectedItems.Count == 0)
+            if (lvPodcasts.SelectedItems.Count == 0)
             {
                 ClearPodcastInputs();
                 return;
@@ -203,16 +214,24 @@ namespace ProjektC
                 txtURL.Text = valdPodcast.Url;
                 cbFrekvens.Text = valdPodcast.Uppdateringsfrekvens;
                 cbKategori.Text = valdPodcast.Kategori;
+                UpdateAvsnittsListan();
 
-                foreach (var avsnitt in pod.AvsnittLista)
-                {
-                    lbAvsnitt.Items.Add(avsnitt.Titel);
-                }
             }
             catch (Exception ex)
             {
                 ErrorHandler.HanteraFel(ex);
             }
+        }
+
+        public void UpdateAvsnittsListan()
+        {
+            lbAvsnitt.Items.Clear();
+
+            foreach (var avsnitt in valdPodcast.AvsnittLista)
+            {
+                lbAvsnitt.Items.Add(avsnitt.Titel);
+            }
+
         }
 
 
@@ -224,7 +243,7 @@ namespace ProjektC
                 document.Load(txtURL.Text);
                 var title = document.SelectSingleNode("rss/channel/title");
                 var avsnittLista = document.SelectNodes("rss/channel/item");
-            
+
                 SetPodcastValues(valdPodcast, title.InnerText, avsnittLista.Count);
                 PodcastHelper.SetAvsnitt(valdPodcast, avsnittLista);
 
@@ -257,9 +276,15 @@ namespace ProjektC
                 txtBeskrivning.Text = valtAvsnitt.Beskrivning;
 
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 ErrorHandler.HanteraFel(ex);
             }
+        }
+
+        private void btnUnselect_Click(object sender, EventArgs e)
+        {
+            lbKategorier.ClearSelected();
         }
     }
 }

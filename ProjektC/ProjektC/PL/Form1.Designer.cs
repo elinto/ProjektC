@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.lvPodcasts = new System.Windows.Forms.ListView();
-            this.Avsnitt = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Namn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Avsnitt = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Frekvens = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Kategori = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label1 = new System.Windows.Forms.Label();
@@ -52,13 +52,14 @@
             this.btnDelete = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.txtBeskrivning = new System.Windows.Forms.TextBox();
+            this.btnUnselect = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lvPodcasts
             // 
             this.lvPodcasts.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.Avsnitt,
             this.Namn,
+            this.Avsnitt,
             this.Frekvens,
             this.Kategori});
             this.lvPodcasts.FullRowSelect = true;
@@ -71,14 +72,14 @@
             this.lvPodcasts.View = System.Windows.Forms.View.Details;
             this.lvPodcasts.SelectedIndexChanged += new System.EventHandler(this.lvPodcasts_SelectedIndexChanged);
             // 
-            // Avsnitt
-            // 
-            this.Avsnitt.Text = "Avsnitt";
-            // 
             // Namn
             // 
             this.Namn.Text = "Namn";
             this.Namn.Width = 62;
+            // 
+            // Avsnitt
+            // 
+            this.Avsnitt.Text = "Avsnitt";
             // 
             // Frekvens
             // 
@@ -262,11 +263,22 @@
             this.txtBeskrivning.Size = new System.Drawing.Size(241, 144);
             this.txtBeskrivning.TabIndex = 19;
             // 
+            // btnUnselect
+            // 
+            this.btnUnselect.Location = new System.Drawing.Point(953, 297);
+            this.btnUnselect.Name = "btnUnselect";
+            this.btnUnselect.Size = new System.Drawing.Size(135, 34);
+            this.btnUnselect.TabIndex = 20;
+            this.btnUnselect.Text = "Avmarkera vald";
+            this.btnUnselect.UseVisualStyleBackColor = true;
+            this.btnUnselect.Click += new System.EventHandler(this.btnUnselect_Click);
+            // 
             // Podcasts
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1161, 663);
+            this.Controls.Add(this.btnUnselect);
             this.Controls.Add(this.txtBeskrivning);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.btnDelete);
@@ -320,6 +332,7 @@
         public System.Windows.Forms.ColumnHeader Frekvens;
         public System.Windows.Forms.ColumnHeader Kategori;
         private System.Windows.Forms.TextBox txtBeskrivning;
+        private System.Windows.Forms.Button btnUnselect;
     }
 }
 
