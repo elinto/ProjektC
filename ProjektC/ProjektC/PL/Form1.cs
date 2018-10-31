@@ -25,7 +25,35 @@ namespace ProjektC
             KategoriLista = KategoriSerializer.GetKategorier();
             UpdatePodcastListan();
             UpdateKategoriListan();
+            StartaUppdateringTimers();
+        }
 
+        private void StartaUppdateringTimers()
+        {
+            foreach (var p in PodcastLista)
+            {
+                StartaTimer(p);
+            }
+        }
+
+        private void StartaTimer(Podcast p)
+        {
+            p.uppdateringsTimer.Interval = PodcastHelper.GetUppdateringsfrekvensMilliseconds(p.Uppdateringsfrekvens);
+            p.uppdateringsTimer.Tick += delegate
+            {
+                var document = new XmlDocument();
+                document.Load(p.Url);
+                var title = document.SelectSingleNode("rss/channel/title");
+                var avsnittLista = document.SelectNodes("rss/channel/item");
+
+                p.Titel = title.InnerText;
+                p.AntalAvsnitt = avsnittLista.Count.ToString();
+                PodcastHelper.SetAvsnitt(p, avsnittLista);
+
+                UpdatePodcastListan();
+                PodcastSerializer.SavePodcasts(PodcastLista);
+            };
+            p.uppdateringsTimer.Start();
         }
 
         private void btnSparaKategori_Click(object sender, EventArgs e)
@@ -57,7 +85,6 @@ namespace ProjektC
 
         private void btnNyKategori_Click(object sender, EventArgs e)
         {
-
             try
             {
                 var kategori = txtKategori.Text;
@@ -137,6 +164,12 @@ namespace ProjektC
                 UpdateKategoriListan();
                 KategoriSerializer.SaveKategorier(KategoriLista);
 
+                var podCastsAttTaBort = PodcastLista.Where(x => x.Kategori == valdKategori).ToList();
+                foreach (var p in podCastsAttTaBort)
+                {
+                    p.uppdateringsTimer.Stop();
+                }
+
                 PodcastLista = PodcastLista.Where(x => x.Kategori != valdKategori).ToList();
                 UpdatePodcastListan();
                 PodcastSerializer.SavePodcasts(PodcastLista);
@@ -166,6 +199,8 @@ namespace ProjektC
                 PodcastSerializer.SavePodcasts(PodcastLista);
 
                 ClearPodcastInputs();
+
+                StartaTimer(p);
             }
             catch (Exception ex)
             {
@@ -184,17 +219,11 @@ namespace ProjektC
 
         private void btnTabort_Click(object sender, EventArgs e)
         {
-
             try
             {
-                for (int i = lvPodcasts.Items.Count - 1; i >= 0; i--)
-                {
-                    if (lvPodcasts.Items[i].Selected)
-                    {
-                        lvPodcasts.Items[i].Remove();
-                        PodcastLista.RemoveAt(i);
-                    }
-                }
+                valdPodcast.uppdateringsTimer.Stop();
+                PodcastLista.Remove(valdPodcast);
+        
                 UpdatePodcastListan();
                 PodcastSerializer.SavePodcasts(PodcastLista);
             }
@@ -258,6 +287,9 @@ namespace ProjektC
 
                 UpdatePodcastListan();
                 PodcastSerializer.SavePodcasts(PodcastLista);
+
+                valdPodcast.uppdateringsTimer.Stop();
+                StartaTimer(valdPodcast);
 
                 ClearPodcastInputs();
             }

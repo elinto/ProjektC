@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace ProjektC.BLL
 {
@@ -10,5 +12,8 @@ namespace ProjektC.BLL
         public string AntalAvsnitt { get; set; }
         public string Titel { get; set; }
         public List<PodcastAvsnitt> AvsnittLista = new List<PodcastAvsnitt>();
+
+        [XmlIgnore]
+        public Timer uppdateringsTimer = new Timer();
     }
 }
