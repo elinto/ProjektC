@@ -19,4 +19,3 @@ namespace ProjektC.BLL
         }
     }
 }
-}
