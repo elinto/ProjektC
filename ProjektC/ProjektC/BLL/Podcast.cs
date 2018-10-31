@@ -2,13 +2,13 @@
 
 namespace ProjektC.BLL
 {
-    public class Podcast
+    public class Podcast : ITitle
     {
         public string Url { get; set; }
         public string Kategori { get; set; }
         public string Uppdateringsfrekvens { get; set; }
         public string AntalAvsnitt { get; set; }
-        public string Namn { get; set; }
+        public string Titel { get; set; }
         public List<PodcastAvsnitt> AvsnittLista = new List<PodcastAvsnitt>();
     }
 }

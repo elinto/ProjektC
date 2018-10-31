@@ -104,7 +104,7 @@ namespace ProjektC
             foreach (var pod in podcastsAttVisa)
             {
                 var item1 = new ListViewItem(new[] {
-                    pod.Namn,
+                    pod.Titel,
                     pod.AntalAvsnitt,
                     pod.Uppdateringsfrekvens,
                     pod.Kategori
@@ -177,7 +177,7 @@ namespace ProjektC
         {
             p.Url = txtURL.Text;
             p.AntalAvsnitt = antalAvsnitt.ToString();
-            p.Namn = title;
+            p.Titel = title;
             p.Kategori = cbKategori.SelectedItem.ToString();
             p.Uppdateringsfrekvens = cbFrekvens.SelectedItem.ToString();
         }
@@ -218,7 +218,7 @@ namespace ProjektC
             {
                 var selectedPodcastNamn = lvPodcasts.SelectedItems[0].Text;
 
-                var pod = PodcastLista.Find(x => x.Namn == selectedPodcastNamn);
+                var pod = PodcastLista.Find(x => x.Titel == selectedPodcastNamn);
                 valdPodcast = pod;
                 txtURL.Text = valdPodcast.Url;
                 cbFrekvens.Text = valdPodcast.Uppdateringsfrekvens;
