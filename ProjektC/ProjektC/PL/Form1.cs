@@ -30,27 +30,45 @@ namespace ProjektC
 
         private void btnSparaKategori_Click(object sender, EventArgs e)
         {
-            var oldValue = lbKategorier.SelectedItem.ToString();
-            var newvalue = txtKategori.Text;
-            int index = KategoriLista.IndexOf(oldValue);
-            if (index != -1)
+            try
             {
-                KategoriLista[index] = newvalue;
+                var oldValue = lbKategorier.SelectedItem.ToString();
+                var newvalue = txtKategori.Text;
+                int index = KategoriLista.IndexOf(oldValue);
+                if (index != -1)
+                {
+                    KategoriLista[index] = newvalue;
+                }
+                UpdateKategoriListan();
+                KategoriSerializer.SaveKategorier(KategoriLista);
             }
-            UpdateKategoriListan();
-            KategoriSerializer.SaveKategorier(KategoriLista);
+
+            catch (Exception ex) 
+            {
+                Console.WriteLine(ex);
+            }
 
         }
 
         private void btnNyKategori_Click(object sender, EventArgs e)
         {
-            var kategori = txtKategori.Text;
-            if (!KategoriLista.Contains(kategori))
+
+            try
             {
-                KategoriLista.Add(kategori);
+                var kategori = txtKategori.Text;
+                if (!KategoriLista.Contains(kategori))
+                {
+                    KategoriLista.Add(kategori);
+                }
+                UpdateKategoriListan();
+                KategoriSerializer.SaveKategorier(KategoriLista);
             }
-            UpdateKategoriListan();
-            KategoriSerializer.SaveKategorier(KategoriLista);
+
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
         }
 
         private void UpdateKategoriListan()
@@ -113,28 +131,37 @@ namespace ProjektC
 
         private void btnNy_Click(object sender, EventArgs e)
         {
-            var document = new XmlDocument();
-            document.Load(txtURL.Text);
-            var title = document.SelectSingleNode("rss/channel/title");
-            var avsnittLista = document.SelectNodes("rss/channel/item");
 
-            var p = new Podcast();
-            p.Url = txtURL.Text;
-            p.AntalAvsnitt = avsnittLista.Count.ToString();
-            p.Namn = title.InnerText;
-            p.Kategori = cbKategori.SelectedItem.ToString();
-            p.Uppdateringsfrekvens = cbFrekvens.SelectedItem.ToString();
-
-            foreach (XmlNode xmlAvsnitt in avsnittLista)
+            try
             {
-                var avsnitt = new PodcastAvsnitt();
-                avsnitt.Titel = xmlAvsnitt.SelectSingleNode("title").InnerText;
-                avsnitt.Beskrivning = xmlAvsnitt.SelectSingleNode("description").InnerText;
-                p.AvsnittLista.Add(avsnitt);
+                var document = new XmlDocument();
+                document.Load(txtURL.Text);
+                var title = document.SelectSingleNode("rss/channel/title");
+                var avsnittLista = document.SelectNodes("rss/channel/item");
+
+                var p = new Podcast();
+                p.Url = txtURL.Text;
+                p.AntalAvsnitt = avsnittLista.Count.ToString();
+                p.Namn = title.InnerText;
+                p.Kategori = cbKategori.SelectedItem.ToString();
+                p.Uppdateringsfrekvens = cbFrekvens.SelectedItem.ToString();
+
+                foreach (XmlNode xmlAvsnitt in avsnittLista)
+                {
+                    var avsnitt = new PodcastAvsnitt();
+                    avsnitt.Titel = xmlAvsnitt.SelectSingleNode("title").InnerText;
+                    avsnitt.Beskrivning = xmlAvsnitt.SelectSingleNode("description").InnerText;
+                    p.AvsnittLista.Add(avsnitt);
+                }
+                PodcastLista.Add(p);
+                UpdatePodcastListan();
+                PodcastSerializer.SavePodcasts(PodcastLista);
             }
-            PodcastLista.Add(p);
-            UpdatePodcastListan();
-            PodcastSerializer.SavePodcasts(PodcastLista);
+
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
 
         private void btnTabort_Click(object sender, EventArgs e)
@@ -203,7 +230,8 @@ namespace ProjektC
                 PodcastSerializer.SavePodcasts(PodcastLista);
 
             }
-            catch { }
+            catch (Exception ex)
+            { Console.WriteLine(ex); }
         }
 
         private void lbAvsnitt_SelectedIndexChanged(object sender, EventArgs e)
