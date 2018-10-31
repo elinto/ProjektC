@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="BLL\Podcast.cs" />
     <Compile Include="BLL\PodcastAvsnitt.cs" />
+    <Compile Include="DAL\KategoriSerializer.cs" />
     <Compile Include="DAL\PodcastSerializer.cs" />
     <Compile Include="PL\Form1.cs">
       <SubType>Form</SubType>

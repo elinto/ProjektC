@@ -22,7 +22,9 @@ namespace ProjektC
             cbFrekvens.Items.Add("Var 30:e minut");
 
             PodcastLista = PodcastSerializer.GetPodcasts();
+            KategoriLista = KategoriSerializer.GetKategorier();
             UpdatePodcastListan();
+            UpdateKategoriListan();
 
         }
 
@@ -47,6 +49,7 @@ namespace ProjektC
                 KategoriLista.Add(kategori);
             }
             UpdateKategoriListan();
+            KategoriSerializer.SaveKategorier(KategoriLista);
         }
 
         private void UpdateKategoriListan()
@@ -97,6 +100,7 @@ namespace ProjektC
                 var deliteItem = lbKategorier.SelectedItem.ToString();
                 KategoriLista.Remove(deliteItem);
                 UpdateKategoriListan();
+                KategoriSerializer.SaveKategorier(KategoriLista);
             }
 
             catch (Exception ex)
