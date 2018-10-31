@@ -43,7 +43,7 @@ namespace ProjektC
                 KategoriSerializer.SaveKategorier(KategoriLista);
             }
 
-            catch (Exception ex) 
+            catch (PodcastException ex)
             {
                 Console.WriteLine(ex);
             }
@@ -64,7 +64,7 @@ namespace ProjektC
                 KategoriSerializer.SaveKategorier(KategoriLista);
             }
 
-            catch (Exception ex)
+            catch (PodcastException ex)
             {
                 Console.WriteLine(ex);
             }
@@ -109,7 +109,10 @@ namespace ProjektC
             {
                 txtKategori.Text = lbKategorier.SelectedItem.ToString();
             }
-            catch (Exception ex) { Console.WriteLine(ex); }
+            catch (PodcastException ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -122,7 +125,7 @@ namespace ProjektC
                 KategoriSerializer.SaveKategorier(KategoriLista);
             }
 
-            catch (Exception ex)
+            catch (PodcastException ex)
             {
                 Console.WriteLine(ex);
             }
@@ -158,7 +161,7 @@ namespace ProjektC
                 PodcastSerializer.SavePodcasts(PodcastLista);
             }
 
-            catch (Exception ex)
+            catch (PodcastException ex)
             {
                 Console.WriteLine(ex);
             }
@@ -181,7 +184,7 @@ namespace ProjektC
                 PodcastSerializer.SavePodcasts(PodcastLista);
             }
 
-            catch (Exception ex)
+            catch (PodcastException ex)
             {
                 Console.WriteLine(ex);
             }
@@ -204,7 +207,10 @@ namespace ProjektC
 
 
             }
-            catch (Exception ex) { Console.WriteLine(ex); }
+            catch (PodcastException ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
 
 
@@ -215,22 +221,22 @@ namespace ProjektC
                 var selectedPodcastNamn = lvPodcasts.SelectedItems[0].Text;
                 var pod = PodcastLista.Find(x => x.Namn == selectedPodcastNamn);
                 valdPodcast = pod;
-                
 
 
-            //        //var oldValue = lbKategorier.SelectedItem.ToString();
-            //var newvalue = txtKategori.Text;
-            //int index = KategoriLista.IndexOf(oldValue);
-            //    if (index != -1)
-            //    {
-            //        KategoriLista[index] = newvalue;
-            //    }
+
+                //        //var oldValue = lbKategorier.SelectedItem.ToString();
+                //var newvalue = txtKategori.Text;
+                //int index = KategoriLista.IndexOf(oldValue);
+                //    if (index != -1)
+                //    {
+                //        KategoriLista[index] = newvalue;
+                //    }
 
                 UpdatePodcastListan();
                 PodcastSerializer.SavePodcasts(PodcastLista);
 
             }
-            catch (Exception ex)
+            catch (PodcastException ex)
             { Console.WriteLine(ex); }
         }
 
@@ -245,7 +251,10 @@ namespace ProjektC
                 txtBeskrivning.Text = valtAvsnitt.Beskrivning;
 
             }
-            catch (Exception ex) { Console.WriteLine(ex); }
+            catch (PodcastException ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
 
     }
