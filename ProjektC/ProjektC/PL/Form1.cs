@@ -77,7 +77,8 @@ namespace ProjektC
                 KategoriSerializer.SaveKategorier(KategoriLista);
 
                 var podcastsMedKategori = PodcastLista.Where(x => x.Kategori == oldValue).ToList();
-                foreach (var p in podcastsMedKategori) {
+                foreach (var p in podcastsMedKategori)
+                {
                     p.Kategori = newvalue;
                 }
                 UpdatePodcastListan();
@@ -234,9 +235,13 @@ namespace ProjektC
             {
                 valdPodcast.uppdateringsTimer.Stop();
                 PodcastLista.Remove(valdPodcast);
-        
+
                 UpdatePodcastListan();
                 PodcastSerializer.SavePodcasts(PodcastLista);
+
+                ClearPodcastInputs();
+                UpdateAvsnittsListan();
+                txtBeskrivning.Clear();
             }
 
             catch (Exception ex)
@@ -248,9 +253,14 @@ namespace ProjektC
 
         private void lvPodcasts_SelectedIndexChanged(object sender, EventArgs e)
         {
+
             if (lvPodcasts.SelectedItems.Count == 0)
             {
                 ClearPodcastInputs();
+                valdPodcast = null;
+                txtBeskrivning.Clear();
+                UpdateAvsnittsListan();
+
                 return;
             }
 
@@ -264,6 +274,7 @@ namespace ProjektC
                 cbFrekvens.Text = valdPodcast.Uppdateringsfrekvens;
                 cbKategori.Text = valdPodcast.Kategori;
                 UpdateAvsnittsListan();
+                txtBeskrivning.Clear();
 
             }
             catch (Exception ex)
@@ -275,10 +286,12 @@ namespace ProjektC
         public void UpdateAvsnittsListan()
         {
             lbAvsnitt.Items.Clear();
-
-            foreach (var avsnitt in valdPodcast.AvsnittLista)
+            if (valdPodcast != null)
             {
-                lbAvsnitt.Items.Add(avsnitt.Titel);
+                foreach (var avsnitt in valdPodcast.AvsnittLista)
+                {
+                    lbAvsnitt.Items.Add(avsnitt.Titel);
+                }
             }
         }
 
