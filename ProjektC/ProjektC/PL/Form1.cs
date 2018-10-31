@@ -41,13 +41,18 @@ namespace ProjektC
                 }
                 UpdateKategoriListan();
                 KategoriSerializer.SaveKategorier(KategoriLista);
-            }
 
+                var podcastsMedKategori = PodcastLista.Where(x => x.Kategori == oldValue).ToList();
+                foreach (var p in podcastsMedKategori) {
+                    p.Kategori = newvalue;
+                }
+                UpdatePodcastListan();
+                PodcastSerializer.SavePodcasts(PodcastLista);
+            }
             catch (Exception ex)
             {
                 ErrorHandler.HanteraFel(ex);
             }
-
         }
 
         private void btnNyKategori_Click(object sender, EventArgs e)
@@ -127,10 +132,14 @@ namespace ProjektC
         {
             try
             {
-                var deliteItem = lbKategorier.SelectedItem.ToString();
-                KategoriLista.Remove(deliteItem);
+                var valdKategori = lbKategorier.SelectedItem.ToString();
+                KategoriLista.Remove(valdKategori);
                 UpdateKategoriListan();
                 KategoriSerializer.SaveKategorier(KategoriLista);
+
+                PodcastLista = PodcastLista.Where(x => x.Kategori != valdKategori).ToList();
+                UpdatePodcastListan();
+                PodcastSerializer.SavePodcasts(PodcastLista);
             }
 
             catch (Exception ex)
