@@ -43,10 +43,10 @@ namespace ProjektC
         private void StartaTimer(Podcast p)
         {
             p.uppdateringsTimer.Interval = PodcastHelper.GetUppdateringsfrekvensMilliseconds(p.Uppdateringsfrekvens);
-            p.uppdateringsTimer.Tick += delegate
+            p.uppdateringsTimer.Tick += async delegate
             {
-                var document = new XmlDocument();
-                document.Load(p.Url);
+                var document = await PodcastFetcher.FetchPodcastAsync(p.Url);
+
                 var title = document.SelectSingleNode("rss/channel/title");
                 var avsnittLista = document.SelectNodes("rss/channel/item");
 
@@ -190,7 +190,7 @@ namespace ProjektC
 
         }
 
-        private void btnNy_Click(object sender, EventArgs e)
+        private async void btnNy_Click(object sender, EventArgs e)
         {
             try
             {
@@ -198,8 +198,8 @@ namespace ProjektC
                 comboboxValiderare.ValideraInput((string)cbFrekvens.SelectedItem);
                 comboboxValiderare.ValideraInput((string)cbKategori.SelectedItem);
 
-                var document = new XmlDocument();
-                document.Load(txtURL.Text);
+                var document = await PodcastFetcher.FetchPodcastAsync(txtURL.Text);
+
                 var title = document.SelectSingleNode("rss/channel/title");
                 var avsnittLista = document.SelectNodes("rss/channel/item");
 
@@ -295,7 +295,7 @@ namespace ProjektC
             }
         }
 
-        private void btnSpara_Click(object sender, EventArgs e)
+        private async void btnSpara_Click(object sender, EventArgs e)
         {
             try
             {
@@ -303,8 +303,8 @@ namespace ProjektC
                 comboboxValiderare.ValideraInput((string)cbFrekvens.SelectedItem);
                 comboboxValiderare.ValideraInput((string)cbKategori.SelectedItem);
 
-                var document = new XmlDocument();
-                document.Load(txtURL.Text);
+                var document =  await PodcastFetcher.FetchPodcastAsync(txtURL.Text);
+
                 var title = document.SelectSingleNode("rss/channel/title");
                 var avsnittLista = document.SelectNodes("rss/channel/item");
 
