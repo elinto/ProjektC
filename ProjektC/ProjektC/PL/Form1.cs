@@ -194,9 +194,15 @@ namespace ProjektC
                 p.uppdateringsTimer.Stop();
             }
 
+            valdPodcast = null;
+
             PodcastLista = PodcastLista.Where(x => x.Kategori != valdKategori).ToList();
             UpdatePodcastListan();
             PodcastStorage.SavePodcasts(PodcastLista);
+            UpdateAvsnittsListan();
+            txtBeskrivning.Clear();
+            ClearPodcastInputs();
+
         }
 
         private async void btnNy_Click(object sender, EventArgs e)
