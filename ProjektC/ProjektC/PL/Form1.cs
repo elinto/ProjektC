@@ -75,19 +75,22 @@ namespace ProjektC
                 }
                 UpdateKategoriListan();
                 KategoriStorage.SaveKategorier(KategoriLista);
-
-                var podcastsMedKategori = PodcastLista.Where(x => x.Kategori == oldValue).ToList();
-                foreach (var p in podcastsMedKategori)
-                {
-                    p.Kategori = newvalue;
-                }
-                UpdatePodcastListan();
-                PodcastStorage.SavePodcasts(PodcastLista);
+                SetNyKategoriPodcast(newvalue, oldValue);
             }
             catch (Exception ex)
             {
                 ErrorHandler.HanteraFel(ex);
             }
+        }
+
+        public void SetNyKategoriPodcast(string newValue, string oldValue) {
+            var podcastsMedKategori = PodcastLista.Where(x => x.Kategori == oldValue).ToList();
+            foreach (var p in podcastsMedKategori)
+            {
+                p.Kategori = newValue;
+            }
+            UpdatePodcastListan();
+            PodcastStorage.SavePodcasts(PodcastLista);
         }
 
         private void btnNyKategori_Click(object sender, EventArgs e)
@@ -176,16 +179,7 @@ namespace ProjektC
                 KategoriLista.Remove(valdKategori);
                 UpdateKategoriListan();
                 KategoriStorage.SaveKategorier(KategoriLista);
-
-                var podCastsAttTaBort = PodcastLista.Where(x => x.Kategori == valdKategori).ToList();
-                foreach (var p in podCastsAttTaBort)
-                {
-                    p.uppdateringsTimer.Stop();
-                }
-
-                PodcastLista = PodcastLista.Where(x => x.Kategori != valdKategori).ToList();
-                UpdatePodcastListan();
-                PodcastStorage.SavePodcasts(PodcastLista);
+                TaBortPodcastMedKategori(valdKategori);
             }
 
             catch (Exception ex)
@@ -193,6 +187,18 @@ namespace ProjektC
                 ErrorHandler.HanteraFel(ex);
             }
 
+        }
+
+        private void TaBortPodcastMedKategori(string valdKategori) {
+            var podCastsAttTaBort = PodcastLista.Where(x => x.Kategori == valdKategori).ToList();
+            foreach (var p in podCastsAttTaBort)
+            {
+                p.uppdateringsTimer.Stop();
+            }
+
+            PodcastLista = PodcastLista.Where(x => x.Kategori != valdKategori).ToList();
+            UpdatePodcastListan();
+            PodcastStorage.SavePodcasts(PodcastLista);
         }
 
         private async void btnNy_Click(object sender, EventArgs e)
