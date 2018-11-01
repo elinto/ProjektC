@@ -125,7 +125,12 @@ namespace ProjektC
             txtKategori.Clear();
         }
 
-        private void UpdatePodcastListan(string kategoriAttFiltrera = null)
+        private void UpdatePodcastListan()
+        {
+            UpdatePodcastListan(null);
+        }
+
+        private void UpdatePodcastListan(string kategoriAttFiltrera)
         {
             lvPodcasts.Items.Clear();
 
@@ -303,7 +308,7 @@ namespace ProjektC
                 comboboxValiderare.ValideraInput((string)cbFrekvens.SelectedItem);
                 comboboxValiderare.ValideraInput((string)cbKategori.SelectedItem);
 
-                var document =  await PodcastFetcher.FetchPodcastAsync(txtURL.Text);
+                var document = await PodcastFetcher.FetchPodcastAsync(txtURL.Text);
 
                 var title = document.SelectSingleNode("rss/channel/title");
                 var avsnittLista = document.SelectNodes("rss/channel/item");
