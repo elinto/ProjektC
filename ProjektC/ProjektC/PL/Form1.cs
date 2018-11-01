@@ -25,8 +25,8 @@ namespace ProjektC
             cbFrekvens.Items.Add("Var 20:e minut");
             cbFrekvens.Items.Add("Var 30:e minut");
 
-            PodcastLista = PodcastSerializer.GetPodcasts();
-            KategoriLista = KategoriSerializer.GetKategorier();
+            PodcastLista = PodcastStorage.GetPodcasts();
+            KategoriLista = KategoriStorage.GetKategorier();
             UpdatePodcastListan();
             UpdateKategoriListan();
             StartaUppdateringTimers();
@@ -55,7 +55,7 @@ namespace ProjektC
                 PodcastHelper.SetAvsnitt(p, avsnittLista);
 
                 UpdatePodcastListan();
-                PodcastSerializer.SavePodcasts(PodcastLista);
+                PodcastStorage.SavePodcasts(PodcastLista);
             };
             p.uppdateringsTimer.Start();
         }
@@ -74,7 +74,7 @@ namespace ProjektC
                     KategoriLista[index] = newvalue;
                 }
                 UpdateKategoriListan();
-                KategoriSerializer.SaveKategorier(KategoriLista);
+                KategoriStorage.SaveKategorier(KategoriLista);
 
                 var podcastsMedKategori = PodcastLista.Where(x => x.Kategori == oldValue).ToList();
                 foreach (var p in podcastsMedKategori)
@@ -82,7 +82,7 @@ namespace ProjektC
                     p.Kategori = newvalue;
                 }
                 UpdatePodcastListan();
-                PodcastSerializer.SavePodcasts(PodcastLista);
+                PodcastStorage.SavePodcasts(PodcastLista);
             }
             catch (Exception ex)
             {
@@ -102,7 +102,7 @@ namespace ProjektC
                     KategoriLista.Add(kategori);
                 }
                 UpdateKategoriListan();
-                KategoriSerializer.SaveKategorier(KategoriLista);
+                KategoriStorage.SaveKategorier(KategoriLista);
             }
             catch (Exception ex)
             {
@@ -175,7 +175,7 @@ namespace ProjektC
                 var valdKategori = lbKategorier.SelectedItem.ToString();
                 KategoriLista.Remove(valdKategori);
                 UpdateKategoriListan();
-                KategoriSerializer.SaveKategorier(KategoriLista);
+                KategoriStorage.SaveKategorier(KategoriLista);
 
                 var podCastsAttTaBort = PodcastLista.Where(x => x.Kategori == valdKategori).ToList();
                 foreach (var p in podCastsAttTaBort)
@@ -185,7 +185,7 @@ namespace ProjektC
 
                 PodcastLista = PodcastLista.Where(x => x.Kategori != valdKategori).ToList();
                 UpdatePodcastListan();
-                PodcastSerializer.SavePodcasts(PodcastLista);
+                PodcastStorage.SavePodcasts(PodcastLista);
             }
 
             catch (Exception ex)
@@ -213,7 +213,7 @@ namespace ProjektC
                 PodcastHelper.SetAvsnitt(p, avsnittLista);
                 PodcastLista.Add(p);
                 UpdatePodcastListan();
-                PodcastSerializer.SavePodcasts(PodcastLista);
+                PodcastStorage.SavePodcasts(PodcastLista);
 
                 ClearPodcastInputs();
 
@@ -242,7 +242,7 @@ namespace ProjektC
                 PodcastLista.Remove(valdPodcast);
 
                 UpdatePodcastListan();
-                PodcastSerializer.SavePodcasts(PodcastLista);
+                PodcastStorage.SavePodcasts(PodcastLista);
 
                 ClearPodcastInputs();
                 UpdateAvsnittsListan();
@@ -317,7 +317,7 @@ namespace ProjektC
                 PodcastHelper.SetAvsnitt(valdPodcast, avsnittLista);
 
                 UpdatePodcastListan();
-                PodcastSerializer.SavePodcasts(PodcastLista);
+                PodcastStorage.SavePodcasts(PodcastLista);
 
                 valdPodcast.uppdateringsTimer.Stop();
                 StartaTimer(valdPodcast);
